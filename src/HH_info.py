@@ -21,23 +21,28 @@ def info_from_hh(employer_ids):
         all_vacancies.append(HH(employer_id).get_employer_data()) #выводим информацию с HH
     n = 0
     while True:
-        information.append(all_vacancies[n][0]['id'])
-        information.append(all_vacancies[n][0]['name'])
-        vac_info = []
+        #information.append(all_vacancies[n][0]['id'])
+        #information.append(all_vacancies[n][0]['name'])
         for vac in all_vacancies[n][1]['items']:
-            vac_info.append(vac['alternate_url'])
-            vac_info.append(vac['name'])
-            vac_info.append(vac['snippet']['responsibility'])
+            information.append(vac['alternate_url'])
+            information.append(vac['name'])
+            information.append(vac['snippet']['responsibility'])
             if vac['salary'] is None:
-                vac_info.append('Зарплата не указана')
+                information.append(0)
             elif vac['salary']['to'] is not None:
-                vac_info.append(vac['salary']['to'])
+                information.append(int(vac['salary']['to']))
             elif vac['salary']['from'] is not None:
-                vac_info.append(vac['salary']['from'])
+                information.append(int(vac['salary']['from']))
             elif vac['salary']['from'] is not None and vac['salary']['to'] is not None:
-                vac_info.append(vac['salary']['from'])
-        information.append(vac_info)
+                information.append(int(vac['salary']['from']))
+            information.append(all_vacancies[n][0]['id'])
+            information.append(all_vacancies[n][0]['name'])
         n += 1
         if n == len(employer_ids):
             break
     return information
+
+
+
+
+
