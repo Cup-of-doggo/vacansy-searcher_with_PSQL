@@ -1,10 +1,17 @@
 from abc import ABC, abstractmethod
 
+import psycopg2
+
 
 class BaseClass(ABC):
     def __init__(self):
-        pass
-
+        self.__conn = psycopg2.connect(
+        host='localhost',
+        database='employers',
+        user='postgres',
+        password='6221596Gord'
+    )
+        self._cur = self.__conn.cursor()
 
 
 class Parser(ABC):

@@ -1,10 +1,10 @@
 import psycopg2
 
-from src.HH_info import info_from_hh, employer_ids
-
-info_for_database = info_from_hh(employer_ids)
 
 def fill_pgadmin(info_for_database):
+    """Заполняет таблицу в pgAdmin переданными данными:
+    vacansy_url, vacansy_name, description, salary, employee_id, employee_name
+    """
 
     conn = psycopg2.connect(
         host='localhost',
@@ -30,13 +30,15 @@ def fill_pgadmin(info_for_database):
     while True:
         if s < len(info_for_database):
             cur.execute('INSERT INTO vacansys_from_HH '
-                        '(vacansy_url, vacansy_name, description, salary, employee_id, employee_name) VALUES (%s, %s, %s, %s, %s, %s);'
-                        , (info_for_database[s], info_for_database[s+1], info_for_database[s+2], info_for_database[s+3], info_for_database[s+4], info_for_database[s+5]))
+                        '(vacansy_url, vacansy_name, description, salary, employee_id, employee_name) '
+                        'VALUES (%s, %s, %s, %s, %s, %s);'
+                        , (info_for_database[s], info_for_database[s+1], info_for_database[s+2],
+                           info_for_database[s+3], info_for_database[s+4], info_for_database[s+5]))
 
             s += 6
         if s == len(info_for_database):
             break
-    cur.execute('SELECT * FROM employers_from_HH')
+    cur.execute('SELECT * FROM vacansys_from_HH')
     conn.commit()
 
 

@@ -1,3 +1,4 @@
+import psycopg2
 import requests
 
 from src.ABS_classes import BaseClass, Parser
@@ -32,21 +33,55 @@ class HH(Parser):
 
 
 class DBManager(BaseClass):
+    """
+    Основной класс для работы с postgresSQL
+    """
 
     def __init__(self):
-        pass
+        self.__conn = psycopg2.connect(
+        host='localhost',
+        database='employers',
+        user='postgres',
+        password='6221596Gord'
+    )
+        self._cur = self.__conn.cursor()
+        super().__init__()
 
-    def get_companies_and_vacancies_count(self):
-        pass
+    def get_companies_and_vacancies_count(self, postgres_table):
+        self._cur.execute(""
+                          "SELECT DISTINCT employee_name, COUNT(vacansy_name) "
+                          f"FROM {postgres_table} "
+                          "GROUP BY employee_name")
+        return self._cur.fetchall()
 
-    def get_all_vacancies(self):
-        pass
 
-    def get_avg_salary(self):
-        pass
+    def get_all_vacancies(self, postgres_table):
+        self._cur.execute(""
+                          "SELECT employee_name, vacansy_name, salary, vacansy_url "
+                          f"FROM {postgres_table}")
+        return self._cur.fetchall()
 
-    def get_vacancies_with_higher_salary(self):
-        pass
 
-    def get_vacancies_with_keyword(self):
-        pass
+    def get_avg_salary(self, postgres_table):
+        self._cur.execute(""
+                          "SELECT AVG(salary) "
+                          f"FROM {postgres_table} "
+                          "WHERE salary > 0 ")
+        return self._cur.fetchall()
+
+
+    def get_vacancies_with_higher_salary(self, postgres_table):
+        self._cur.execute(""
+                          "SELECT vacansy_name, salary "
+                          f"FROM {postgres_table} "
+                          f"WHERE salary  >= (SELECT AVG(salary) from {postgres_table} WHERE salary > 0) "
+                          "")
+        return self._cur.fetchall()
+
+
+    def get_vacancies_with_keyword(self,postgres_table, keyword):
+        self._cur.execute(""
+                          "SELECT vacansy_name, salary "
+                          f"FROM {postgres_table} "
+                          f"WHERE vacansy_name LIKE '%{keyword}%'")
+        return self._cur.fetchall()
