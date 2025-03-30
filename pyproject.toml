@@ -3,7 +3,7 @@ name = "Vacansy_search_with_PSQL"
 version = "0.1.0"
 description = ""
 authors = ["Gordey <gordej.taran@mail.ru>"]
-
+readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.12"
@@ -11,6 +11,7 @@ python-dotenv = "^1.0.1"
 openpyxl = "^3.1.5"
 export = "^0.2.1"
 flake8 = "^7.1.1"
+pandas = "^2.2.3"
 ticker = "^0.13"
 pytest = "^8.3.4"
 
