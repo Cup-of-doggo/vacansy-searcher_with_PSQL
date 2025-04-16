@@ -1,5 +1,8 @@
+import os
+from dotenv import load_dotenv
 import psycopg2
 
+load_dotenv()
 
 def fill_pgadmin(info_for_database):
     """Заполняет таблицу в pgAdmin переданными данными:
@@ -10,7 +13,7 @@ def fill_pgadmin(info_for_database):
         host='localhost',
         database='employers',
         user='postgres',
-        password='6221596Gord'
+        password=os.getenv('PSQL_PASSWORD')
     )
 
     cur = conn.cursor()

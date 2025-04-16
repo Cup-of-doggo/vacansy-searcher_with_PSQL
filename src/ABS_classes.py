@@ -1,15 +1,19 @@
+import os
 from abc import ABC, abstractmethod
 
 import psycopg2
+from dotenv import load_dotenv
 
+load_dotenv()
 
 class BaseClass(ABC):
+    """Абстрактный класс для подключения к postgres"""
     def __init__(self):
         self.__conn = psycopg2.connect(
         host='localhost',
         database='employers',
         user='postgres',
-        password='6221596Gord'
+        password=os.getenv('PSQL_PASSWORD')
     )
         self._cur = self.__conn.cursor()
 

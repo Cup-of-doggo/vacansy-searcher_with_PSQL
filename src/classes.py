@@ -1,7 +1,12 @@
+import os
+
 import psycopg2
 import requests
 
 from src.ABS_classes import BaseClass, Parser
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 class HH(Parser):
@@ -42,12 +47,13 @@ class DBManager(BaseClass):
         host='localhost',
         database='employers',
         user='postgres',
-        password='6221596Gord'
+        password=os.getenv('PSQL_PASSWORD')
     )
         self._cur = self.__conn.cursor()
         super().__init__()
 
     def get_companies_and_vacancies_count(self, postgres_table):
+        """Получает список всех компаний и количество вакансий у каждой компании."""
         self._cur.execute(""
                           "SELECT DISTINCT employee_name, COUNT(vacansy_name) "
                           f"FROM {postgres_table} "
@@ -56,6 +62,8 @@ class DBManager(BaseClass):
 
 
     def get_all_vacancies(self, postgres_table):
+        """Получает список всех вакансий с указанием названия компании,
+        названия вакансии и зарплаты и ссылки на вакансию."""
         self._cur.execute(""
                           "SELECT employee_name, vacansy_name, salary, vacansy_url "
                           f"FROM {postgres_table}")
@@ -63,6 +71,7 @@ class DBManager(BaseClass):
 
 
     def get_avg_salary(self, postgres_table):
+        """Получает среднюю зарплату по вакансиям."""
         self._cur.execute(""
                           "SELECT AVG(salary) "
                           f"FROM {postgres_table} "
@@ -71,6 +80,8 @@ class DBManager(BaseClass):
 
 
     def get_vacancies_with_higher_salary(self, postgres_table):
+        """Получает список всех вакансий,
+        у которых зарплата выше средней по всем вакансиям."""
         self._cur.execute(""
                           "SELECT vacansy_name, salary "
                           f"FROM {postgres_table} "
@@ -80,6 +91,8 @@ class DBManager(BaseClass):
 
 
     def get_vacancies_with_keyword(self,postgres_table, keyword):
+        """Получает список всех вакансий,
+         в названии которых содержатся переданные в метод слова, например python."""
         self._cur.execute(""
                           "SELECT vacansy_name, salary "
                           f"FROM {postgres_table} "
