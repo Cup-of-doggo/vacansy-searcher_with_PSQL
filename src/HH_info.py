@@ -26,7 +26,11 @@ def info_from_hh(employer_ids):
                 information.append(int(vac['salary']['from']))
             information.append(all_vacancies[n][0]['id'])
             information.append(all_vacancies[n][0]['name'])
+            information.append(all_vacancies[n][0]['site_url'])
+            information.append(all_vacancies[n][0]['description'])
+
         n += 1
         if n == len(employer_ids):
             break
     return information
+
