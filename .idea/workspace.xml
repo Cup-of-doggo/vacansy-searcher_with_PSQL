@@ -4,16 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4cda37dc-cb2b-4465-9865-047a69abb0a0" name="Changes" comment="16/04 commit">
-      <change afterPath="$PROJECT_DIR$/.env_template" afterDir="false" />
+    <list default="true" id="4cda37dc-cb2b-4465-9865-047a69abb0a0" name="Changes" comment="19/04 commit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HH_info.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HH_info.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/classes.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/scratch.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/scratch.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/conftest.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/conftest.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_classes.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_classes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_scratch.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_scratch.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,6 +20,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectColorInfo">{
@@ -52,7 +49,7 @@
     "Python.scratch.executor": "Run",
     "Python.ss.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "develop",
     "last_opened_file_path": "C:/Users/gorde/PycharmProjects/Vacansy_search_with_PSQL",
     "settings.editor.selected.configurable": "vcs.Git"
   },
@@ -70,7 +67,7 @@
       <recent name="C:\Users\gorde\PycharmProjects\Vacansy_search_with_PSQL\src" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.classes">
     <configuration name="classes" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Vacansy_search_with_PSQL" />
       <option name="ENV_FILES" value="" />
@@ -119,6 +116,9 @@
       <list>
         <item itemvalue="Python.ss" />
         <item itemvalue="Python.classes" />
+        <item itemvalue="Python.ss" />
+        <item itemvalue="Python.classes" />
+        <item itemvalue="Python.ss" />
       </list>
     </recent_temporary>
   </component>
@@ -214,6 +214,7 @@
     <MESSAGE value="28/03 commit" />
     <MESSAGE value="29/03 commit" />
     <MESSAGE value="16/04 commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="16/04 commit" />
+    <MESSAGE value="19/04 commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="19/04 commit" />
   </component>
 </project>
