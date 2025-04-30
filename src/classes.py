@@ -52,49 +52,50 @@ class DBManager(BaseClass):
         self._cur = self.__conn.cursor()
         super().__init__()
 
-    def get_companies_and_vacancies_count(self, postgres_table):
+    def get_companies_and_vacancies_count(self, postgres_vac_table, postgres_emp_table):
         """Получает список всех компаний и количество вакансий у каждой компании."""
         self._cur.execute(""
                           "SELECT DISTINCT employee_name, COUNT(vacansy_name) "
-                          f"FROM {postgres_table} "
+                          f"FROM {postgres_vac_table} JOIN {postgres_emp_table} USING(employee_id) "
                           "GROUP BY employee_name")
         return self._cur.fetchall()
 
 
-    def get_all_vacancies(self, postgres_table):
+    def get_all_vacancies(self, postgres_vac_table, postgres_emp_table):
         """Получает список всех вакансий с указанием названия компании,
         названия вакансии и зарплаты и ссылки на вакансию."""
         self._cur.execute(""
                           "SELECT employee_name, vacansy_name, salary, vacansy_url "
-                          f"FROM {postgres_table}")
+                          f"FROM {postgres_vac_table} JOIN {postgres_emp_table} USING(employee_id)")
         return self._cur.fetchall()
 
 
-    def get_avg_salary(self, postgres_table):
+    def get_avg_salary(self, postgres_vac_table, postgres_emp_table):
         """Получает среднюю зарплату по вакансиям."""
         self._cur.execute(""
                           "SELECT AVG(salary) "
-                          f"FROM {postgres_table} "
+                          f"FROM {postgres_vac_table} JOIN {postgres_emp_table} USING(employee_id) "
                           "WHERE salary > 0 ")
         return self._cur.fetchall()
 
 
-    def get_vacancies_with_higher_salary(self, postgres_table):
+    def get_vacancies_with_higher_salary(self, postgres_vac_table, postgres_emp_table):
         """Получает список всех вакансий,
         у которых зарплата выше средней по всем вакансиям."""
         self._cur.execute(""
                           "SELECT vacansy_name, salary "
-                          f"FROM {postgres_table} "
-                          f"WHERE salary  >= (SELECT AVG(salary) from {postgres_table} WHERE salary > 0) "
+                          f"FROM {postgres_vac_table} "
+                          f"WHERE salary  >= (SELECT AVG(salary) from {postgres_vac_table} JOIN {postgres_emp_table} USING(employee_id)"
+                          f" WHERE salary > 0) "
                           "")
         return self._cur.fetchall()
 
 
-    def get_vacancies_with_keyword(self,postgres_table, keyword):
+    def get_vacancies_with_keyword(self, postgres_vac_table, postgres_emp_table, keyword):
         """Получает список всех вакансий,
          в названии которых содержатся переданные в метод слова, например python."""
         self._cur.execute(""
                           "SELECT vacansy_name, salary "
-                          f"FROM {postgres_table} "
+                          f"FROM {postgres_vac_table} JOIN {postgres_emp_table} USING(employee_id) "
                           f"WHERE vacansy_name LIKE '%{keyword}%'")
         return self._cur.fetchall()

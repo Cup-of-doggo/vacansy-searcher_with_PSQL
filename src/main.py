@@ -1,12 +1,7 @@
-import os
 from src.HH_info import info_from_hh
 from src.classes import DBManager
-from src.scratch import fill_pgadmin
+from src.scratch import fill_vac_table, database_creator, fill_emp_table
 from dotenv import load_dotenv
-import psycopg2
-
-
-load_dotenv()
 
 
 employer_ids = [
@@ -25,28 +20,43 @@ employer_ids = [
 
 def main():
     """Основная функция для вывода информации в базу данных и консоль"""
-    conn = psycopg2.connect(
-            dbname="postgres",
-            user="postgres",
-            password=os.getenv('PSQL_PASSWORD'),
-           host="localhost",
-            port="5432"
-        )
+    database_creator()
+    fill_vac_table(info_from_hh(employer_ids))
+    fill_emp_table(info_from_hh(employer_ids))
+    print('Здравствуйте, если вы хотите получить список всех работодателей и количество их вакансии напишите "1",'
+          '\nесли вы хотите получить полный список вакансий у работодателей нажмите "2",'
+          '\nесли вы хотите посмотреть среднюю зарплату у работодателей нажмите "3",'
+          '\nесли вы хотите получить список вакансий с зарплатой выше среднего нажмите "4",'
+          '\nесли вы хотите найти какую то конкретную вакансию нажмите "5", затем напишите какую.')
+    user_input =  input()
 
-    conn.autocommit = True
+    if user_input == '1':
+        info = DBManager().get_companies_and_vacancies_count('vacansys_from_HH',
+                                                             'employ_from_HH')
+        return info
 
-    cur = conn.cursor()
+    elif user_input == '2':
+        info = DBManager().get_all_vacancies('vacansys_from_HH',
+                                                             'employ_from_HH')
+        return info
 
-    #Создание новой базы данных
-    cur.execute('DROP DATABASE IF EXISTS employers')
-    cur.execute('CREATE DATABASE employers;')
-    conn.commit()
+    elif user_input == '3':
+        info = DBManager().get_avg_salary('vacansys_from_HH',
+                                                             'employ_from_HH')
+        return info
 
-    cur.close()
-    conn.close()
+    elif user_input == '4':
+        info = DBManager().get_vacancies_with_higher_salary('vacansys_from_HH',
+                                                             'employ_from_HH')
+        return info
 
-    fill_pgadmin(info_from_hh(employer_ids))
-    vac = DBManager().get_all_vacancies('vacansys_from_HH')
-    return vac
+    elif user_input == '5':
+        print("Введите слово для поиска:")
+        keyword_input = input()
+        info = DBManager().get_vacancies_with_keyword('vacansys_from_HH',
+                                                             'employ_from_HH',keyword_input)
+        return info
+
 
 print(main())
+
